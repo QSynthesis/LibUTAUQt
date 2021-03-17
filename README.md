@@ -1,5 +1,5 @@
 # LibUTAUQt
-A powerful Qt library for UTAU plugin developers for file interaction
+A powerful Qt library for UTAU plugin developers to read and write temp file
 
 ## Appreciation
 ### LibUTAU216
