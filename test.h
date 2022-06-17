@@ -1,8 +1,9 @@
 ﻿#ifndef TEST_H
 #define TEST_H
 
-#include "LibUTAUQt/QUtauData.h"
 #include <QDebug>
+
+#include <QUtauData.h>
 
 // 打开文件
 int openTempFile(QUtauData &oData, const QString &oFileName, bool *oSuccess = NULL);

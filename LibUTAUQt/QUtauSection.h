@@ -20,7 +20,8 @@
 #include "QUtauStrings.h"
 
 class QUtauData;
-class QUtauSection {
+
+class LIBUTAUQT_EXPORT QUtauSection {
 public:
     // 构造
     QUtauSection();

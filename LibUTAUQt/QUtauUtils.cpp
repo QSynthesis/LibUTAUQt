@@ -5,6 +5,8 @@
 #include <QDir>
 #include <QDirIterator>
 
+static const QString TONE_NAMES = "CCDDEFFGGAAB";
+
 //===========================================================================
 // UTAU 控制点类
 QCtrlPoint::QCtrlPoint() {

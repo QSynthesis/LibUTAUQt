@@ -11,7 +11,7 @@
 
 #include "QUtauSection.h"
 
-class QUtauSectionNote : public QUtauSection {
+class LIBUTAUQT_EXPORT QUtauSectionNote : public QUtauSection {
 public:
     // 构造
     QUtauSectionNote();

@@ -7,6 +7,14 @@
     Qt Version : Copyright (C) 2020-2021 by SineStriker
 ===========================================================================*/
 
+#include <QtCore>
+
+#ifdef LIBUTAUQT_BUILD_STATIC
+#define LIBUTAUQT_EXPORT
+#else
+#define LIBUTAUQT_EXPORT Q_DECL_EXPORT
+#endif
+
 enum {
     MFM_OMITTED,
     MFM_ORIGINAL,

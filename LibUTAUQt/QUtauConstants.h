@@ -12,6 +12,7 @@
 #include <QDebug>
 #include <QObject>
 
+#include "QUtauGlobal.h"
 
 const QString DELETE_STRING = "%DELETE%";
 const QString NODEF_STRING = "%NODEF%";

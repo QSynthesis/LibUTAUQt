@@ -4,19 +4,23 @@
 
 using namespace std;
 
-#include "LibUTAUQt/QUtauData.h"
+#include <QUtauData.h>
+
 #include "test.h"
 
 int main(int argc, char *argv[]) {
-    QCoreApplication a(argc, argv);
-
     // 检测命令行参数
     if (argc < 2) {
         qDebug() << "No input file.";
-        return a.exec();
+        return 0;
     }
 
+#ifdef Q_OS_WINDOWS
     QString aInputFile(QString::fromLocal8Bit(argv[1]));
+#else
+    QString aInputFile(QString::fromUtf8(argv[1]));
+#endif
+
     QUtauData aUtauData;
     bool aSuccess;
 
@@ -25,7 +29,7 @@ int main(int argc, char *argv[]) {
 
     if (!aSuccess) {
         qDebug() << "Open failed.";
-        return a.exec();
+        return -1;
     } else {
         qDebug() << "Open success.";
     }
@@ -45,5 +49,5 @@ int main(int argc, char *argv[]) {
         qDebug() << "Export failed.";
     }
 
-    return a.exec();
+    return 0;
 }

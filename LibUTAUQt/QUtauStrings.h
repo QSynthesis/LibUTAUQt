@@ -9,6 +9,8 @@
 
 #include <QString>
 
+#include "QUtauGlobal.h"
+
 //===========================================================================
 // 节名
 const QString SECTION_BEGIN_MARK = "[#";

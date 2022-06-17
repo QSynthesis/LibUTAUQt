@@ -15,11 +15,10 @@
 //===========================================================================
 
 // 音阶名
-const QString TONE_NAMES = "CCDDEFFGGAAB";
 enum ControlPointType { sType, lineType, rType, jType };
 
 // UTAU 控制点类
-class QCtrlPoint {
+class LIBUTAUQT_EXPORT QCtrlPoint {
 public:
     QCtrlPoint();
     QCtrlPoint(const QCtrlPoint &oRHS);

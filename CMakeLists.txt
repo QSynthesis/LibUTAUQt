@@ -1,0 +1,51 @@
+cmake_minimum_required(VERSION 3.17)
+
+project(LibUTAUQt)
+
+# 自行设置此处的开关
+set(BUILD_STATIC_LIBRARY OFF)
+set(BUILD_TEST ON)
+
+# 设置各种名称
+set(LIBUTAUQT_NAME LibUTAUQt)
+set(LIBUTAUQT_VERSION 0.0.1)
+set(LIBUTAUQT_FILENAME LibUTAUQt)
+set(LIBUTAUQT_DIR ${CMAKE_CURRENT_SOURCE_DIR}/LibUTAUQt)
+
+# 设置输出目录
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib)
+
+set(QT_LIBS)
+set(LIBUTAUQT_FILES)
+
+# 查找Qt库
+find_package(QT NAMES Qt6 Qt5 COMPONENTS Core REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core REQUIRED)
+list(APPEND QT_LIBS Qt${QT_VERSION_MAJOR}::Core)
+
+# 添加源文件
+file(GLOB LIBUTAUQT_FILES ${LIBUTAUQT_DIR}/*.h ${LIBUTAUQT_DIR}/*.cpp)
+
+# 构建库
+if(BUILD_STATIC_LIBRARY)
+    add_library(${LIBUTAUQT_NAME} STATIC ${LIBUTAUQT_FILES})
+    target_compile_definitions(${LIBUTAUQT_NAME} PUBLIC LIBUTAUQT_BUILD_STATIC)
+else()
+    add_library(${LIBUTAUQT_NAME} SHARED ${LIBUTAUQT_FILES})
+endif()
+
+set_target_properties(${QUAZIP_LIB_TARGET_NAME} PROPERTIES
+    VERSION ${LIBUTAUQT_VERSION}
+    OUTPUT_NAME ${LIBUTAUQT_FILENAME}
+)
+
+target_link_libraries(${LIBUTAUQT_NAME} PUBLIC ${QT_LIBS})
+target_include_directories(${LIBUTAUQT_NAME} PUBLIC ${LIBUTAUQT_DIR})
+
+# 构建测试文件
+if(BUILD_TEST)
+    add_executable(test main.cpp test.h test.cpp)
+    target_link_libraries(test PRIVATE ${LIBUTAUQT_NAME})
+endif()

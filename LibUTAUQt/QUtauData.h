@@ -19,7 +19,7 @@
 #include "QUtauSectionSettings.h"
 #include "QUtauSectionVersion.h"
 
-class QUtauData {
+class LIBUTAUQT_EXPORT QUtauData {
 public:
     QUtauData();
     ~QUtauData();

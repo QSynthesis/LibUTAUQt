@@ -12,7 +12,9 @@
 #include <QDebug>
 #include <QObject>
 
-class QGenonSettings {
+#include "QUtauGlobal.h"
+
+class LIBUTAUQT_EXPORT QGenonSettings {
 public:
     QGenonSettings();
     ~QGenonSettings();
