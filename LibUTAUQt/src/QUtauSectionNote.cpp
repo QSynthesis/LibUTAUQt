@@ -1,4 +1,4 @@
-﻿#include "QUtauData.h"
+﻿#include "QUtauUst.h"
 #include <cmath>
 
 #include "QUtauSectionNote.h"
@@ -133,10 +133,10 @@ bool QUtauSectionNote::GetCorrectedGenon(CorrectGenon *oCorrectedGenon) const {
 
 //===========================================================================
 // 获取音量包络的绝对坐标
-bool QUtauSectionNote::GetCorrectedEnvelope(QVector<QCtrlPoint> *oCorrectedEnvelope) const {
+bool QUtauSectionNote::GetCorrectedEnvelope(QVector<QUtauPoint> *oCorrectedEnvelope) const {
     double aCorrectedDuration;
     QString aEnvelope;
-    QVector<QCtrlPoint> aEnvelopeVector;
+    QVector<QUtauPoint> aEnvelopeVector;
 
     oCorrectedEnvelope->clear();
 
@@ -148,7 +148,7 @@ bool QUtauSectionNote::GetCorrectedEnvelope(QVector<QCtrlPoint> *oCorrectedEnvel
     }
     aEnvelopeVector = StringToEnvelope(aEnvelope);
 
-    for (QVector<QCtrlPoint>::size_type i = 0; i < aEnvelopeVector.size(); i++) {
+    for (QVector<QUtauPoint>::size_type i = 0; i < aEnvelopeVector.size(); i++) {
         if (aEnvelopeVector[i].mX == NODEF_DOUBLE) {
             aEnvelopeVector[i].mX = 0.0;
         }
@@ -159,29 +159,29 @@ bool QUtauSectionNote::GetCorrectedEnvelope(QVector<QCtrlPoint> *oCorrectedEnvel
 
     oCorrectedEnvelope->push_back(aEnvelopeVector[0]);
 
-    oCorrectedEnvelope->push_back(QCtrlPoint((*oCorrectedEnvelope)[0].mX, 0) + aEnvelopeVector[1]);
+    oCorrectedEnvelope->push_back(QUtauPoint((*oCorrectedEnvelope)[0].mX, 0) + aEnvelopeVector[1]);
 
     if (aEnvelopeVector.size() == NUM_ENVELOPE_POINTS) {
-        oCorrectedEnvelope->push_back(QCtrlPoint((*oCorrectedEnvelope)[1].mX, 0) +
+        oCorrectedEnvelope->push_back(QUtauPoint((*oCorrectedEnvelope)[1].mX, 0) +
                                       aEnvelopeVector[2]);
     }
 
-    oCorrectedEnvelope->push_back(QCtrlPoint(aCorrectedDuration - 1 -
+    oCorrectedEnvelope->push_back(QUtauPoint(aCorrectedDuration - 1 -
                                                  aEnvelopeVector[aEnvelopeVector.size() - 1].mX -
                                                  aEnvelopeVector[aEnvelopeVector.size() - 2].mX,
                                              aEnvelopeVector[aEnvelopeVector.size() - 2].mY));
 
     oCorrectedEnvelope->push_back(
-        QCtrlPoint(aCorrectedDuration - 1 - aEnvelopeVector[aEnvelopeVector.size() - 1].mX,
+        QUtauPoint(aCorrectedDuration - 1 - aEnvelopeVector[aEnvelopeVector.size() - 1].mX,
                    aEnvelopeVector[aEnvelopeVector.size() - 1].mY));
     return 1;
 }
 
 //---------------------------------------------------------------------------
-bool QUtauSectionNote::SetCorrectedEnvelope(const QVector<QCtrlPoint> &oCorrectedEnvelope) {
+bool QUtauSectionNote::SetCorrectedEnvelope(const QVector<QUtauPoint> &oCorrectedEnvelope) {
     bool aOffset;
     double aCorrectedDuration;
-    QVector<QCtrlPoint> aEnvelope;
+    QVector<QUtauPoint> aEnvelope;
 
     if (oCorrectedEnvelope.size() != NUM_ENVELOPE_POINTS &&
         oCorrectedEnvelope.size() != NUM_ENVELOPE_POINTS - 1) {
@@ -193,17 +193,17 @@ bool QUtauSectionNote::SetCorrectedEnvelope(const QVector<QCtrlPoint> &oCorrecte
     }
 
     aOffset = (oCorrectedEnvelope.size() == NUM_ENVELOPE_POINTS);
-    aEnvelope.push_back(QCtrlPoint(oCorrectedEnvelope[0].mX, oCorrectedEnvelope[0].mY));
+    aEnvelope.push_back(QUtauPoint(oCorrectedEnvelope[0].mX, oCorrectedEnvelope[0].mY));
     aEnvelope.push_back(
-        QCtrlPoint(oCorrectedEnvelope[1].mX - oCorrectedEnvelope[0].mX, oCorrectedEnvelope[1].mY));
+        QUtauPoint(oCorrectedEnvelope[1].mX - oCorrectedEnvelope[0].mX, oCorrectedEnvelope[1].mY));
     if (oCorrectedEnvelope.size() == NUM_ENVELOPE_POINTS) {
-        aEnvelope.push_back(QCtrlPoint(oCorrectedEnvelope[2].mX - oCorrectedEnvelope[1].mX,
+        aEnvelope.push_back(QUtauPoint(oCorrectedEnvelope[2].mX - oCorrectedEnvelope[1].mX,
                                        oCorrectedEnvelope[2].mY));
     }
     aEnvelope.push_back(
-        QCtrlPoint(oCorrectedEnvelope[3 + aOffset].mX - oCorrectedEnvelope[2 + aOffset].mX,
+        QUtauPoint(oCorrectedEnvelope[3 + aOffset].mX - oCorrectedEnvelope[2 + aOffset].mX,
                    oCorrectedEnvelope[2 + aOffset].mY));
-    aEnvelope.push_back(QCtrlPoint(aCorrectedDuration - 1 - oCorrectedEnvelope[3 + aOffset].mX,
+    aEnvelope.push_back(QUtauPoint(aCorrectedDuration - 1 - oCorrectedEnvelope[3 + aOffset].mX,
                                    oCorrectedEnvelope[3 + aOffset].mY));
 
     SetValue(KEY_NAME_ENVELOPE, EnvelopeToString(aEnvelope));
@@ -212,12 +212,12 @@ bool QUtauSectionNote::SetCorrectedEnvelope(const QVector<QCtrlPoint> &oCorrecte
 
 //===========================================================================
 // 获取绝对 Mode2 音高曲线
-bool QUtauSectionNote::GetCorrectedPortamento(QVector<QCtrlPoint> *oCorrectedPitch) const {
+bool QUtauSectionNote::GetCorrectedPortamento(QVector<QUtauPoint> *oCorrectedPitch) const {
     int aNoteNum, aPrevNoteNum;
     QString aPBS, aPBW, aPBY, aPBM;
     QVector<double> aPBSXY, aPBWs, aPBYs;
     QVector<QString> aPBMs;
-    QCtrlPoint aPoint;
+    QUtauPoint aPoint;
 
     QString aPrevLyric;
 
@@ -258,7 +258,7 @@ bool QUtauSectionNote::GetCorrectedPortamento(QVector<QCtrlPoint> *oCorrectedPit
             aPBMs = qstring_to_qvector_qstring(aPBM);
         }
         for (QVector<double>::size_type i = 0; i < qMax(aPBWs.size(), aPBYs.size()); i++) {
-            aPoint = QCtrlPoint();
+            aPoint = QUtauPoint();
             if (aPBWs.size() > i) {
                 aPoint.mX = aPBWs[i] >= 0 ? aPBWs[i] : 0;
             }
@@ -266,7 +266,8 @@ bool QUtauSectionNote::GetCorrectedPortamento(QVector<QCtrlPoint> *oCorrectedPit
                 aPoint.mY = (aPBYs[i] == NODEF_DOUBLE) ? 0 : aPBYs[i];
             }
             if (aPBMs.size() > i) {
-                aPoint.mP = (aPBMs[i] == NODEF_STRING) ? sType : stringToPointType(aPBMs[i]);
+                aPoint.mP = (aPBMs[i] == NODEF_STRING) ? QUtauPoint::sType
+                                                       : QUtauPoint::stringToPointType(aPBMs[i]);
             }
             aPoint.mX += oCorrectedPitch->back().mX;
             oCorrectedPitch->push_back(aPoint);
@@ -277,7 +278,7 @@ bool QUtauSectionNote::GetCorrectedPortamento(QVector<QCtrlPoint> *oCorrectedPit
 
 //---------------------------------------------------------------------------
 // 设置绝对 Mode2 音高曲线
-void QUtauSectionNote::SetCorrectedPortamento(const QVector<QCtrlPoint> &oCorrectedPitch) {
+void QUtauSectionNote::SetCorrectedPortamento(const QVector<QUtauPoint> &oCorrectedPitch) {
     int aNoteNum, aPrevNoteNum;
     QVector<double> aVectorDouble;
     QVector<QString> aVectorString;
@@ -297,35 +298,35 @@ void QUtauSectionNote::SetCorrectedPortamento(const QVector<QCtrlPoint> &oCorrec
     SetValue(KEY_NAME_PBS, qvector_double_to_qstring(aVectorDouble, ";"));
 
     aVectorDouble.clear();
-    for (QVector<QCtrlPoint>::size_type i = 1; i < oCorrectedPitch.size(); i++) {
+    for (QVector<QUtauPoint>::size_type i = 1; i < oCorrectedPitch.size(); i++) {
         aVectorDouble.push_back(oCorrectedPitch[i].mX - oCorrectedPitch[i - 1].mX);
     }
     SetValue(KEY_NAME_PBW, qvector_double_to_qstring(aVectorDouble));
 
     aVectorDouble.clear();
-    for (QVector<QCtrlPoint>::size_type i = 1; i < oCorrectedPitch.size(); i++) {
+    for (QVector<QUtauPoint>::size_type i = 1; i < oCorrectedPitch.size(); i++) {
         aVectorDouble.push_back(oCorrectedPitch[i].mY);
     }
     SetValue(KEY_NAME_PBY, qvector_double_to_qstring(aVectorDouble));
 
     aVectorString.clear();
-    for (QVector<QCtrlPoint>::size_type i = 1; i < oCorrectedPitch.size(); i++) {
-        aVectorString.push_back(pointTypeToString(oCorrectedPitch[i].mP));
+    for (QVector<QUtauPoint>::size_type i = 1; i < oCorrectedPitch.size(); i++) {
+        aVectorString.push_back(QUtauPoint::pointTypeToString(oCorrectedPitch[i].mP));
     }
 
     SetValue(KEY_NAME_PBM, qvector_qstring_to_qstring(aVectorString));
 }
 
-bool QUtauSectionNote::GetEnvelope(QVector<QCtrlPoint> *oCorrectedEnvelope) const {
+bool QUtauSectionNote::GetEnvelope(QVector<QUtauPoint> *oCorrectedEnvelope) const {
     QString aEnvelope;
-    QVector<QCtrlPoint> aEnvelopeVector;
+    QVector<QUtauPoint> aEnvelopeVector;
 
     if (!GetValue(KEY_NAME_ENVELOPE, &aEnvelope)) {
         return 0;
     }
     aEnvelopeVector = StringToEnvelope(aEnvelope);
 
-    for (QVector<QCtrlPoint>::size_type i = 0; i < aEnvelopeVector.size(); i++) {
+    for (QVector<QUtauPoint>::size_type i = 0; i < aEnvelopeVector.size(); i++) {
         if (aEnvelopeVector[i].mX == NODEF_DOUBLE) {
             aEnvelopeVector[i].mX = 0.0;
         }
@@ -338,7 +339,7 @@ bool QUtauSectionNote::GetEnvelope(QVector<QCtrlPoint> *oCorrectedEnvelope) cons
     return 1;
 }
 
-bool QUtauSectionNote::SetEnvelope(const QVector<QCtrlPoint> &oCorrectedEnvelope) {
+bool QUtauSectionNote::SetEnvelope(const QVector<QUtauPoint> &oCorrectedEnvelope) {
     QString aEnvelope = EnvelopeToString(oCorrectedEnvelope);
     SetValue(KEY_NAME_ENVELOPE, aEnvelope);
     return 1;
@@ -429,10 +430,10 @@ bool QUtauSectionNote::GetGenonSettings(QGenonSettings *oGenonSettings) const {
 
 //===========================================================================
 // 字符串转包络
-QVector<QCtrlPoint> QUtauSectionNote::StringToEnvelope(const QString &oStr) {
+QVector<QUtauPoint> QUtauSectionNote::StringToEnvelope(const QString &oStr) {
     QVector<QString> aVectorString = qstring_to_qvector_qstring(oStr);
     QVector<double> aVectorDouble;
-    QVector<QCtrlPoint> aEnvelope;
+    QVector<QUtauPoint> aEnvelope;
 
     if (aVectorString.size() >= 8) {
         aVectorString.erase(aVectorString.begin() + 7);
@@ -442,19 +443,19 @@ QVector<QCtrlPoint> QUtauSectionNote::StringToEnvelope(const QString &oStr) {
         aVectorDouble.push_back(NODEF_DOUBLE);
     }
 
-    aEnvelope.push_back(QCtrlPoint(aVectorDouble[0], aVectorDouble[3]));
-    aEnvelope.push_back(QCtrlPoint(aVectorDouble[1], aVectorDouble[4]));
+    aEnvelope.push_back(QUtauPoint(aVectorDouble[0], aVectorDouble[3]));
+    aEnvelope.push_back(QUtauPoint(aVectorDouble[1], aVectorDouble[4]));
     if (aVectorDouble.size() == NUM_ENVELOPE_POINTS * 2) {
-        aEnvelope.push_back(QCtrlPoint(aVectorDouble[8], aVectorDouble[9]));
+        aEnvelope.push_back(QUtauPoint(aVectorDouble[8], aVectorDouble[9]));
     }
-    aEnvelope.push_back(QCtrlPoint(aVectorDouble[2], aVectorDouble[5]));
-    aEnvelope.push_back(QCtrlPoint(aVectorDouble[7], aVectorDouble[6]));
+    aEnvelope.push_back(QUtauPoint(aVectorDouble[2], aVectorDouble[5]));
+    aEnvelope.push_back(QUtauPoint(aVectorDouble[7], aVectorDouble[6]));
     return aEnvelope;
 }
 
 //---------------------------------------------------------------------------
 // 包络转字符串
-QString QUtauSectionNote::EnvelopeToString(const QVector<QCtrlPoint> &oEnvelope) {
+QString QUtauSectionNote::EnvelopeToString(const QVector<QUtauPoint> &oEnvelope) {
     int aOffset;
     QVector<QString> aVectorString;
     QVector<double> aVectorDouble;

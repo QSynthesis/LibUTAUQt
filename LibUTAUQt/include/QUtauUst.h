@@ -1,5 +1,5 @@
-﻿#ifndef QUTAUDATA_H
-#define QUTAUDATA_H
+﻿#ifndef QUTAUUST_H
+#define QUTAUUST_H
 
 /*===========================================================================
     UTAU Sequence Text - 记录类型
@@ -19,10 +19,10 @@
 #include "QUtauSectionSettings.h"
 #include "QUtauSectionVersion.h"
 
-class LIBUTAUQT_EXPORT QUtauData {
+class LIBUTAUQT_API QUtauUst {
 public:
-    QUtauData();
-    ~QUtauData();
+    QUtauUst();
+    ~QUtauUst();
 
     // 如果将 loadOto 指定为 false，那么不加载原音设定，用来减少启动时间
     int LoadFromFile(const QString &oPath, bool loadOto = true);
@@ -65,4 +65,4 @@ private:
     bool GenonAnalyzed;
 };
 
-#endif // QUTAUDATA_H
+#endif // QUTAUUST_H

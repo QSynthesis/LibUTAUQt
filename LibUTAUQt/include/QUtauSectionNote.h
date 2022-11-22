@@ -10,8 +10,9 @@
 //---------------------------------------------------------------------------
 
 #include "QUtauSection.h"
+#include "QUtauPoint.h"
 
-class LIBUTAUQT_EXPORT QUtauSectionNote : public QUtauSection {
+class LIBUTAUQT_API QUtauSectionNote : public QUtauSection {
 public:
     // 构造
     QUtauSectionNote();
@@ -26,21 +27,21 @@ public:
     bool GetCorrectedGenon(CorrectGenon *oCorrectedGenon) const;
 
     // 获取绝对包络坐标
-    bool GetCorrectedEnvelope(QVector<QCtrlPoint> *oCorrectedEnvelope) const;
+    bool GetCorrectedEnvelope(QVector<QUtauPoint> *oCorrectedEnvelope) const;
 
     // 设置绝对包络坐标
-    bool SetCorrectedEnvelope(const QVector<QCtrlPoint> &oCorrectedEnvelope);
+    bool SetCorrectedEnvelope(const QVector<QUtauPoint> &oCorrectedEnvelope);
 
     // 获取绝对 Mode2 音高曲线
-    bool GetCorrectedPortamento(QVector<QCtrlPoint> *oCorrectedPitch) const;
+    bool GetCorrectedPortamento(QVector<QUtauPoint> *oCorrectedPitch) const;
 
     // 设置绝对 Mode2 音高曲线
-    void SetCorrectedPortamento(const QVector<QCtrlPoint> &oCorrectedPitch);
+    void SetCorrectedPortamento(const QVector<QUtauPoint> &oCorrectedPitch);
 
     // 获取包络数组
-    bool GetEnvelope(QVector<QCtrlPoint> *oCorrectedEnvelope) const;
+    bool GetEnvelope(QVector<QUtauPoint> *oCorrectedEnvelope) const;
     // 获取包络数组
-    bool SetEnvelope(const QVector<QCtrlPoint> &oCorrectedEnvelope);
+    bool SetEnvelope(const QVector<QUtauPoint> &oCorrectedEnvelope);
 
     // 获取 UTAU 校正的值
     bool GetSuperiorPreUtterance(double *oCorrectedPreUtterance) const;
@@ -53,12 +54,12 @@ public:
     bool GetSuperiorCache(QString *oCorrectedCache) const;
 
     // 字符串转包络
-    static QVector<QCtrlPoint> StringToEnvelope(const QString &oStr);
+    static QVector<QUtauPoint> StringToEnvelope(const QString &oStr);
 
     // 包络转字符串
-    static QString EnvelopeToString(const QVector<QCtrlPoint> &oEnvelope);
+    static QString EnvelopeToString(const QVector<QUtauPoint> &oEnvelope);
 
-    friend class QUtauData;
+    friend class QUtauUst;
 
 private:
     // 音符节名格式

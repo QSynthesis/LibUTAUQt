@@ -9,10 +9,16 @@
 
 #include <QtCore>
 
-#ifdef LIBUTAUQT_BUILD_STATIC
-#define LIBUTAUQT_EXPORT
-#else
-#define LIBUTAUQT_EXPORT Q_DECL_EXPORT
+#ifndef LIBUTAUQT_API
+#  ifdef LIBUTAUQT_STATIC
+#    define LIBUTAUQT_API
+#  else
+#    ifdef LIBUTAUQT_LIBRARY
+#      define LIBUTAUQT_API Q_DECL_EXPORT
+#    else
+#      define LIBUTAUQT_API Q_DECL_IMPORT
+#    endif
+#  endif
 #endif
 
 enum {

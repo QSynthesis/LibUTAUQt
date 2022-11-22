@@ -1,14 +1,14 @@
-﻿#include "QUtauData.h"
+﻿#include "QUtauUst.h"
 
 //===========================================================================
-QUtauData::QUtauData() {
+QUtauUst::QUtauUst() {
     GenonAnalyzed = false;
 }
 
-QUtauData::~QUtauData() {
+QUtauUst::~QUtauUst() {
 }
 
-int QUtauData::LoadFromFile(const QString &oPath, bool loadOto) {
+int QUtauUst::LoadFromFile(const QString &oPath, bool loadOto) {
     GenonAnalyzed = loadOto;
 
     int aResult = ERROR_INVALID_FORMAT; // 假设格式不正确
@@ -109,7 +109,7 @@ int QUtauData::LoadFromFile(const QString &oPath, bool loadOto) {
     return aResult;
 }
 
-bool QUtauData::Export(const QString &oPath) const {
+bool QUtauUst::Export(const QString &oPath) const {
     QStringList aStringList;
     QStringList::iterator p;
 
@@ -136,7 +136,7 @@ bool QUtauData::Export(const QString &oPath) const {
     return 1;
 }
 
-bool QUtauData::ExportTotal(const QString &oPath) const {
+bool QUtauUst::ExportTotal(const QString &oPath) const {
     QStringList aStringList;
     QStringList::iterator p;
 
@@ -170,7 +170,7 @@ bool QUtauData::ExportTotal(const QString &oPath) const {
     return 1;
 }
 
-bool QUtauData::ExportToUst(const QString &oPath) {
+bool QUtauUst::ExportToUst(const QString &oPath) {
     QStringList aStringList;
     QStringList::iterator p;
 
@@ -204,18 +204,18 @@ bool QUtauData::ExportToUst(const QString &oPath) {
     return 1;
 }
 
-int QUtauData::CountSectionNotes() const {
+int QUtauUst::CountSectionNotes() const {
     return mSectionNotes.size();
 }
 
-int QUtauData::SectionNotesNormalBegin() const {
+int QUtauUst::SectionNotesNormalBegin() const {
     if (!mSectionNotes.empty() && mSectionNotes[0].SectionName() == SECTION_NAME_PREV) {
         return 1;
     }
     return 0;
 }
 
-int QUtauData::SectionNotesNormalEnd() const {
+int QUtauUst::SectionNotesNormalEnd() const {
     if (!mSectionNotes.empty() &&
         mSectionNotes[mSectionNotes.size() - 1].SectionName() == SECTION_NAME_NEXT) {
         return mSectionNotes.size() - 1;
@@ -223,49 +223,49 @@ int QUtauData::SectionNotesNormalEnd() const {
     return mSectionNotes.size();
 }
 
-bool QUtauData::hasPrevSpecialNote() const {
+bool QUtauUst::hasPrevSpecialNote() const {
     return mSectionNotes[0].SectionName() == SECTION_NAME_PREV;
 }
 
-bool QUtauData::hasNextSpecialNote() const {
+bool QUtauUst::hasNextSpecialNote() const {
     return mSectionNotes[mSectionNotes.size() - 1].SectionName() == SECTION_NAME_NEXT;
 }
 
-const QUtauSectionVersion *QUtauData::SectionVersion() const {
+const QUtauSectionVersion *QUtauUst::SectionVersion() const {
     return &mSectionVersion;
 }
 
-const QUtauSectionSettings *QUtauData::SectionSettings() const {
+const QUtauSectionSettings *QUtauUst::SectionSettings() const {
     return &mSectionSettings;
 }
 
-const QUtauSectionNote *QUtauData::SectionNoteAt(int oIndex) const {
+const QUtauSectionNote *QUtauUst::SectionNoteAt(int oIndex) const {
     if (oIndex < 0 || oIndex >= mSectionNotes.size()) {
         return NULL;
     }
     return &mSectionNotes[oIndex];
 }
 
-QUtauSectionVersion *QUtauData::SectionVersion() {
+QUtauSectionVersion *QUtauUst::SectionVersion() {
     return &mSectionVersion;
 }
 
-QUtauSectionSettings *QUtauData::SectionSettings() {
+QUtauSectionSettings *QUtauUst::SectionSettings() {
     return &mSectionSettings;
 }
 
-QUtauSectionNote *QUtauData::SectionNoteAt(int oIndex) {
+QUtauSectionNote *QUtauUst::SectionNoteAt(int oIndex) {
     if (oIndex < 0 || oIndex >= mSectionNotes.size()) {
         return NULL;
     }
     return &mSectionNotes[oIndex];
 }
 
-bool QUtauData::AddSectionNote(const QUtauSectionNote &oSectionNote) {
+bool QUtauUst::AddSectionNote(const QUtauSectionNote &oSectionNote) {
     return InsertSectionNote(oSectionNote, CountSectionNotes());
 }
 
-bool QUtauData::InsertSectionNote(const QUtauSectionNote &oSectionNote, int oIndex) {
+bool QUtauUst::InsertSectionNote(const QUtauSectionNote &oSectionNote, int oIndex) {
     QVector<QUtauSectionNote>::iterator p;
 
     if (oIndex < 0 || oIndex > mSectionNotes.size()) {
@@ -280,7 +280,7 @@ bool QUtauData::InsertSectionNote(const QUtauSectionNote &oSectionNote, int oInd
     return 1;
 }
 
-bool QUtauData::ReplaceSectionNote(const QUtauSectionNote &oSectionNote, int oIndex) {
+bool QUtauUst::ReplaceSectionNote(const QUtauSectionNote &oSectionNote, int oIndex) {
     if (oIndex < 0 || oIndex >= mSectionNotes.size()) {
         return 0;
     }
@@ -291,7 +291,7 @@ bool QUtauData::ReplaceSectionNote(const QUtauSectionNote &oSectionNote, int oIn
     return 1;
 }
 
-bool QUtauData::RemoveSectionNote(int oIndex) {
+bool QUtauUst::RemoveSectionNote(int oIndex) {
     if (oIndex < 0 || oIndex >= mSectionNotes.size()) {
         return 0;
     }
@@ -301,24 +301,24 @@ bool QUtauData::RemoveSectionNote(int oIndex) {
     return 1;
 }
 
-bool QUtauData::isGenonAnalyzed() {
+bool QUtauUst::isGenonAnalyzed() {
     return GenonAnalyzed;
 }
 
-bool QUtauData::AnalyzeGenonSettings() {
+bool QUtauUst::AnalyzeGenonSettings() {
     GenonAnalyzed = true;
 
     return mSectionSettings.AnalyzeGenonSettings();
 }
 
-bool QUtauData::InvalidateNeighborNotes() {
+bool QUtauUst::InvalidateNeighborNotes() {
     for (QVector<QUtauSectionNote>::size_type i = 0; i < mSectionNotes.size(); i++) {
         mSectionNotes[i].SetNeighborNotes(NULL, NULL);
     }
     return 1;
 }
 
-bool QUtauData::SetNeighborNotes() {
+bool QUtauUst::SetNeighborNotes() {
     if (mSectionNotes.size() <= 1) {
         return 1;
     }

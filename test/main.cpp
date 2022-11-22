@@ -4,8 +4,6 @@
 
 using namespace std;
 
-#include <QUtauData.h>
-
 #include "test.h"
 
 int main(int argc, char *argv[]) {
@@ -21,7 +19,7 @@ int main(int argc, char *argv[]) {
     QString aInputFile(QString::fromUtf8(argv[1]));
 #endif
 
-    QUtauData aUtauData;
+    QUtauUst aUtauData;
     bool aSuccess;
 
     // 第一步：打开文件

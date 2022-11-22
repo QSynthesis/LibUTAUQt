@@ -11,7 +11,7 @@
 
 #include "QUtauSection.h"
 
-class LIBUTAUQT_EXPORT QUtauSectionVersion : public QUtauSection {
+class LIBUTAUQT_API QUtauSectionVersion : public QUtauSection {
 public:
     QUtauSectionVersion();
 

@@ -1,5 +1,5 @@
 ﻿#include "QUtauSectionSettings.h"
-#include "QUtauData.h"
+#include "QUtauUst.h"
 
 //===========================================================================
 QUtauSectionSettings::QUtauSectionSettings() {

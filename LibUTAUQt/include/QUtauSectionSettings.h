@@ -11,7 +11,7 @@
 
 #include "QUtauSection.h"
 
-class LIBUTAUQT_EXPORT QUtauSectionSettings : public QUtauSection {
+class LIBUTAUQT_API QUtauSectionSettings : public QUtauSection {
 public:
     QUtauSectionSettings();
 
@@ -24,7 +24,7 @@ public:
     bool GenonSettingsFind(const QString &oLyric, QGenonSettings *oGenon,
                            const int &oNoteNum = 0) const;
 
-    friend class QUtauData; // 将父级设为友元类
+    friend class QUtauUst; // 将父级设为友元类
 
 private:
     virtual bool IsValidSectionName(const QString &oSectionName) const override;

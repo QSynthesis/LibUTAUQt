@@ -8,82 +8,6 @@
 static const QString TONE_NAMES = "CCDDEFFGGAAB";
 
 //===========================================================================
-// UTAU 控制点类
-QCtrlPoint::QCtrlPoint() {
-    mX = 0.0;
-    mY = 0.0;
-    mP = sType;
-}
-
-QCtrlPoint::QCtrlPoint(const QCtrlPoint &oRHS) {
-    mX = oRHS.mX;
-    mY = oRHS.mY;
-    mP = oRHS.mP;
-}
-
-QCtrlPoint::QCtrlPoint(double oX, double oY) {
-    mX = oX;
-    mY = oY;
-    mP = sType;
-}
-
-QCtrlPoint::QCtrlPoint(double oX, double oY, ControlPointType oP) {
-    mX = oX;
-    mY = oY;
-    mP = oP;
-}
-
-QCtrlPoint &QCtrlPoint::operator=(const QCtrlPoint &oRHS) {
-    mX = oRHS.mX;
-    mY = oRHS.mY;
-    mP = oRHS.mP;
-
-    return *this;
-}
-
-QCtrlPoint QCtrlPoint::operator+(const QCtrlPoint &oRHS) const {
-    QCtrlPoint aResult;
-    aResult.mX = mX + oRHS.mX;
-    aResult.mY = mY + oRHS.mY;
-
-    return aResult;
-}
-
-QCtrlPoint &QCtrlPoint::operator+=(const QCtrlPoint &oRHS) {
-    mX += oRHS.mX;
-    mY += oRHS.mY;
-
-    return *this;
-}
-
-QCtrlPoint QCtrlPoint::operator-() const {
-    QCtrlPoint aResult(-mX, -mY, mP);
-    return aResult;
-}
-
-QCtrlPoint QCtrlPoint::operator-(const QCtrlPoint &oRHS) const {
-    QCtrlPoint aResult;
-    aResult.mX = mX - oRHS.mX;
-    aResult.mY = mY - oRHS.mY;
-
-    return aResult;
-}
-
-QCtrlPoint &QCtrlPoint::operator-=(const QCtrlPoint &oRHS) {
-    mX -= oRHS.mX;
-    mY -= oRHS.mY;
-
-    return *this;
-}
-
-QDebug operator<<(QDebug debug, const QCtrlPoint &oRHS) {
-    QString info =
-        QString("QCtrlPoint(mX:%1; mY:%2; mP:%3)").arg(oRHS.mX).arg(oRHS.mY).arg(oRHS.mP);
-    debug << info;
-    return debug;
-}
-
-//===========================================================================
 // 字符串 转 字符串数组
 QVector<QString> qstring_to_qvector_qstring(const QString &oStr, const QString &oDelim) {
     QString::size_type aCurPos = 0, aNextPos;
@@ -321,41 +245,6 @@ bool isRestNoteLyric(const QString &oLyric) {
     QString aTrimmedLyric = oLyric.trimmed();
 
     return (aTrimmedLyric.isEmpty() || aTrimmedLyric == "R" || aTrimmedLyric == "r");
-}
-
-QString pointTypeToString(const ControlPointType &oType) {
-    QString aResult;
-    switch (oType) {
-    case sType:
-        aResult = "";
-        break;
-    case lineType:
-        aResult = "s";
-    case rType:
-        aResult = "r";
-        break;
-    case jType:
-        aResult = "j";
-        break;
-    }
-
-    return aResult;
-}
-
-ControlPointType stringToPointType(const QString &oString) {
-    ControlPointType aResult;
-
-    if (oString == "s") {
-        aResult = lineType;
-    } else if (oString == "r") {
-        aResult = rType;
-    } else if (oString == "j") {
-        aResult = jType;
-    } else {
-        aResult = sType;
-    }
-
-    return aResult;
 }
 
 //===========================================================================

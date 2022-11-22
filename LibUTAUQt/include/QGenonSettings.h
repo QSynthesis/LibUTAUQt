@@ -14,7 +14,7 @@
 
 #include "QUtauGlobal.h"
 
-class LIBUTAUQT_EXPORT QGenonSettings {
+class LIBUTAUQT_API QGenonSettings {
 public:
     QGenonSettings();
     ~QGenonSettings();

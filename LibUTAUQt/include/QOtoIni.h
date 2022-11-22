@@ -16,7 +16,7 @@
 #include "QGenonSettings.h"
 #include "QPrefixMap.h"
 
-class LIBUTAUQT_EXPORT QOtoIni {
+class LIBUTAUQT_API QOtoIni {
 public:
     QOtoIni();
     ~QOtoIni();

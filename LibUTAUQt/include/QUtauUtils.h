@@ -13,37 +13,6 @@
 #include "QUtauGlobal.h"
 
 //===========================================================================
-
-// 音阶名
-enum ControlPointType { sType, lineType, rType, jType };
-
-// UTAU 控制点类
-class LIBUTAUQT_EXPORT QCtrlPoint {
-public:
-    QCtrlPoint();
-    QCtrlPoint(const QCtrlPoint &oRHS);
-
-    QCtrlPoint(double oX, double oY);
-    QCtrlPoint(double oX, double oY, ControlPointType oP);
-
-    QCtrlPoint &operator=(const QCtrlPoint &oRHS);
-
-    QCtrlPoint operator+(const QCtrlPoint &oRHS) const;
-    QCtrlPoint &operator+=(const QCtrlPoint &oRHS);
-
-    QCtrlPoint operator-() const;
-
-    QCtrlPoint operator-(const QCtrlPoint &oRHS) const;
-    QCtrlPoint &operator-=(const QCtrlPoint &oRHS);
-
-    friend QDebug operator<<(QDebug debug, const QCtrlPoint &oRHS);
-
-    double mX;
-    double mY;
-    ControlPointType mP;
-};
-
-//===========================================================================
 // 包含先行声音，重叠，STP的组
 struct CorrectGenon {
     double PreUtterance;
@@ -123,10 +92,6 @@ inline QString extract_file_path(const QString &oFullPath) {
 //===========================================================================
 // 判断休止符
 bool isRestNoteLyric(const QString &oLyric);
-
-// 控制点类型转换
-QString pointTypeToString(const ControlPointType &oType);
-ControlPointType stringToPointType(const QString &oString);
 
 //===========================================================================
 

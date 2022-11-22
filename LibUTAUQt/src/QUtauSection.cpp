@@ -12,15 +12,15 @@ QUtauSection::~QUtauSection() {
 
 //===========================================================================
 // 设置或返回父级
-void QUtauSection::SetParent(QUtauData *oParent) {
+void QUtauSection::SetParent(QUtauUst *oParent) {
     mParent = oParent;
 }
 
-const QUtauData *QUtauSection::Parent() const {
+const QUtauUst *QUtauSection::Parent() const {
     return mParent;
 }
 
-QUtauData *QUtauSection::Parent() {
+QUtauUst *QUtauSection::Parent() {
     return mParent;
 }
 

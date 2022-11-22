@@ -7,7 +7,7 @@
 
 #include "QUtauGlobal.h"
 
-class LIBUTAUQT_EXPORT QPrefixMap {
+class LIBUTAUQT_API QPrefixMap {
 public:
     QPrefixMap();
     ~QPrefixMap();

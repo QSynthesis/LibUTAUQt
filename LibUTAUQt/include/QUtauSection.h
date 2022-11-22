@@ -19,9 +19,9 @@
 
 #include "QUtauStrings.h"
 
-class QUtauData;
+class QUtauUst;
 
-class LIBUTAUQT_EXPORT QUtauSection {
+class LIBUTAUQT_API QUtauSection {
 public:
     // 构造
     QUtauSection();
@@ -30,9 +30,9 @@ public:
     virtual ~QUtauSection();
 
     // 设置或返回父级
-    void SetParent(QUtauData *oParent);
-    const QUtauData *Parent() const;
-    QUtauData *Parent();
+    void SetParent(QUtauUst *oParent);
+    const QUtauUst *Parent() const;
+    QUtauUst *Parent();
 
     // 初始化
     virtual int LoadFromStringList(const QStringList &oStringList);
@@ -105,7 +105,7 @@ private:
     // 将一行保存为键名和键值
     bool GetKeyAndValue(const QString &oLine, QString *oKey, QString *oValue) const;
 
-    QUtauData *mParent;                       // 父级
+    QUtauUst *mParent;                       // 父级
     QMap<QString, QString> mOriginalValueMap; // 保存原始键值
     QMap<QString, QString> mDefaultValueMap;  // 保存默认键值
     QMap<QString, QString> mUserValueMap;     // 保存更改的键值

@@ -1,7 +1,7 @@
 ﻿#include "test.h"
 
 // 打开文件
-int openTempFile(QUtauData &oData, const QString &oFileName, bool *oSuccess) {
+int openTempFile(QUtauUst &oData, const QString &oFileName, bool *oSuccess) {
     int tmpOpenCode = oData.LoadFromFile(oFileName);
     bool aSuccess = true;
 
@@ -47,7 +47,7 @@ int openTempFile(QUtauData &oData, const QString &oFileName, bool *oSuccess) {
 }
 
 // 遍历音符
-int traverseNotes(const QUtauData &oData) {
+int traverseNotes(const QUtauUst &oData) {
     const QUtauSectionNote *aNote;
     QVector<QUtauSectionNote>::size_type i;
 
@@ -114,7 +114,7 @@ int traverseNotes(const QUtauData &oData) {
     return 1;
 }
 
-int modifyLyricBatch(QUtauData &oData) {
+int modifyLyricBatch(QUtauUst &oData) {
     QUtauSectionNote *aNote;
     QVector<QUtauSectionNote>::size_type i;
 

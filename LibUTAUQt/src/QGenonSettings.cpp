@@ -19,3 +19,5 @@ QDebug operator<<(QDebug debug, const QGenonSettings &oGenon) {
     debug << info;
     return debug;
 }
+
+//===========================================================================
