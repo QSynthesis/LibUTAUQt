@@ -1,3 +1,5 @@
+Use [https://github.com/VocaValley/stdutau](https://github.com/VocaValley/stdutau) instead.
+
 # LibUTAUQt
 A powerful Qt library for UTAU plugin developers to read and write temp file
 
